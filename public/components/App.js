@@ -28,19 +28,21 @@ const newTicTacToeGrid = () => {
 
 function Game() {
     const grid = newTicTacToeGrid()
+    const handleClick = (x, y) => {
+        console.log({x,y})
+    }
     return (
         <div>
-            <Grid suppliedGrid={grid} />
+            <Grid suppliedGrid={grid} handleClick={handleClick} />
         </div>
     )
 }
 
-function Grid({ suppliedGrid }) {
+function Grid({ suppliedGrid, handleClick }) {
     return (
         <div style={{
             display: 'inline-block'
             }}>
-            <h2>Grid</h2>
             <div style={{ 
                 backgroundColor: `#444`,
                 display: `grid`,
@@ -53,6 +55,9 @@ function Grid({ suppliedGrid }) {
                         return (
                             <Cell 
                                 key={`${columnIndex}-${rowIndex}`}
+                                onClick={() => {
+                                    handleClick(columnIndex, rowIndex)
+                                }}
                                 value={value} 
                             />
                         )
@@ -64,12 +69,20 @@ function Grid({ suppliedGrid }) {
     )
 }
 
-function Cell() {
+function Cell({onClick, value}) {
     return (
         <div style={{
             backgroundColor: `#fff`,
             width: 100,
             height: 100
-        }}></div>
+        }}>
+            <button 
+                style={{
+                    width: `100%`,
+                    height: `100%`
+                }}
+                onClick={onClick}
+                type="button">{value}</button>
+        </div>
     )
 }
