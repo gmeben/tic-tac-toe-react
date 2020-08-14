@@ -190,12 +190,15 @@ function Grid({ suppliedGrid, handleClick }) {
 
 function Cell({onClick, value}) {
     return (
-        <div style={{
-            backgroundColor: `#fff`,
-            width: 100,
-            height: 100
-        }}>
+        <div 
+            className="cell" 
+            style={{
+                backgroundColor: `#fff`,
+                width: 100,
+                height: 100
+            }}>
             <button 
+                className="button"
                 style={{
                     width: `100%`,
                     height: `100%`,
