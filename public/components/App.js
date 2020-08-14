@@ -40,6 +40,12 @@ const initialState = {
 
 const reducer = (state, action) => {
     switch (action.type) {
+        case 'RESET': {
+            const nextState = clone(state)
+            nextState.grid = newTicTacToeGrid()
+            nextState.turn = 'X'
+            return nextState
+        }
         case 'CLICK': {
             const { x, y } = action.payload
             const { grid, turn } = state 
@@ -74,8 +80,18 @@ function Game() {
             payload: {x, y}
         })
     }
+
+    const reset = () => {
+        dispatch({
+            type: `RESET`
+        })
+    }
+
     return (
         <div>
+            <div>
+                <button type="button" onClick={reset}>Reset</button>
+            </div>
             <Grid suppliedGrid={grid} handleClick={handleClick} />
         </div>
     )
@@ -122,7 +138,10 @@ function Cell({onClick, value}) {
             <button 
                 style={{
                     width: `100%`,
-                    height: `100%`
+                    height: `100%`,
+                    // borderStyle: `none`,
+                    // borderCollapse: `collapse`,
+                    borderSpacing: `0`
                 }}
                 onClick={onClick}
                 type="button">{value}</button>
