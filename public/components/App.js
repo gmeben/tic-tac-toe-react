@@ -22,6 +22,27 @@ function generateGrid(rows, columns, mapper) {
     )
 }
 
+function checkThree(a, b, c) {
+    if (!a || !b || !c) {
+        return false
+    }
+    return (a === b && b === c)
+}
+
+function checkForWin(grid) {
+    const [nw, n, ne, w, c, e, sw, s, se] = grid.flat()
+    return (
+        checkThree(nw, n, ne) ||
+        checkThree(w, c, e) ||
+        checkThree(sw, s, se) ||
+        checkThree(nw, w, sw) ||
+        checkThree(n, c, s) ||
+        checkThree(ne, e, se) ||
+        checkThree(nw, c, se) ||
+        checkThree(ne, c, sw)
+    )
+}
+
 const newTicTacToeGrid = () => {
     return generateGrid(3, 3, () => {
         return null
@@ -35,6 +56,7 @@ const NEXT_TURN = {
 
 const getInitialState = () => ({
     grid: newTicTacToeGrid(),
+    status: 'GAME_IN_PROGRESS',
     turn: 'X'
 })
 
@@ -54,6 +76,12 @@ const reducer = (state, action) => {
             const nextState = clone(state)
 
             nextState.grid[y][x] = turn
+
+            if (checkForWin(nextState.grid)) {
+                nextState.status = 'GAME_COMPLETE'
+                return nextState
+            }
+
             nextState.turn = NEXT_TURN[turn]
 
             return nextState
@@ -69,7 +97,7 @@ function Game() {
         reducer,
         getInitialState()
     )
-    const { grid } = state
+    const { grid, status, turn } = state
 
     const handleClick = (x, y) => {
         dispatch({
@@ -85,8 +113,14 @@ function Game() {
     }
 
     return (
-        <div>
-            <div>
+        <div style={{
+            display: `inline-block`
+        }}>
+            <div style={{
+                display: `flex`,
+                justifyContent: `space-between`
+            }}>
+                <div>{status !== 'GAME_COMPLETE' ? `Next Turn: ${turn}` : `${turn} WINS`}</div>
                 <button type="button" onClick={reset}>Reset</button>
             </div>
             <Grid suppliedGrid={grid} handleClick={handleClick} />
