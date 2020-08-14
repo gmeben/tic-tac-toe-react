@@ -33,18 +33,15 @@ const NEXT_TURN = {
     X: 'O'
 }
 
-const initialState = {
+const getInitialState = () => ({
     grid: newTicTacToeGrid(),
     turn: 'X'
-}
+})
 
 const reducer = (state, action) => {
     switch (action.type) {
         case 'RESET': {
-            const nextState = clone(state)
-            nextState.grid = newTicTacToeGrid()
-            nextState.turn = 'X'
-            return nextState
+            return getInitialState()
         }
         case 'CLICK': {
             const { x, y } = action.payload
@@ -70,7 +67,7 @@ const reducer = (state, action) => {
 function Game() {
     const [state, dispatch] = React.useReducer(
         reducer,
-        initialState
+        getInitialState()
     )
     const { grid } = state
 
