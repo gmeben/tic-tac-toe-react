@@ -11,6 +11,8 @@ export default function App() {
     )
 }
 
+const clone = x => JSON.parse(JSON.stringify(x))
+
 function generateGrid(rows, columns, mapper) {
     return Array(rows)
         .fill()
@@ -26,10 +28,51 @@ const newTicTacToeGrid = () => {
     })
 }
 
+const NEXT_TURN = {
+    O: 'X',
+    X: 'O'
+}
+
+const initialState = {
+    grid: newTicTacToeGrid(),
+    turn: 'X'
+}
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'CLICK': {
+            const { x, y } = action.payload
+            const { grid, turn } = state 
+
+            if (grid[y][x]) {
+                return state
+            }
+            
+            const nextState = clone(state)
+
+            nextState.grid[y][x] = turn
+            nextState.turn = NEXT_TURN[turn]
+
+            return nextState
+        }
+
+        default: 
+            return state
+    }
+}
+
 function Game() {
-    const grid = newTicTacToeGrid()
+    const [state, dispatch] = React.useReducer(
+        reducer,
+        initialState
+    )
+    const { grid } = state
+
     const handleClick = (x, y) => {
-        console.log({x,y})
+        dispatch({
+            type: 'CLICK', 
+            payload: {x, y}
+        })
     }
     return (
         <div>
