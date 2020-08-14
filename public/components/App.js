@@ -43,6 +43,11 @@ function checkForWin(grid) {
     )
 }
 
+function checkForDraw(grid) {
+    const flatGrid = grid.flat()
+    return (!checkForWin(flatGrid) && flatGrid.filter(Boolean).length === flatGrid.length)
+}
+
 const newTicTacToeGrid = () => {
     return generateGrid(3, 3, () => {
         return null
@@ -61,6 +66,14 @@ const getInitialState = () => ({
 })
 
 const reducer = (state, action) => {
+
+    if (
+        state.status === 'GAME_COMPLETE' &&
+        action.type !== 'RESET'
+    ) {
+        return state
+    }
+
     switch (action.type) {
         case 'RESET': {
             return getInitialState()
@@ -79,6 +92,11 @@ const reducer = (state, action) => {
 
             if (checkForWin(nextState.grid)) {
                 nextState.status = 'GAME_COMPLETE'
+                return nextState
+            }
+
+            if (checkForDraw(nextState.grid)) {
+                nextState.status = 'GAME_DRAW'
                 return nextState
             }
 
@@ -112,6 +130,17 @@ function Game() {
         })
     }
 
+    const statusDisplay = () => {
+        switch (status) {
+            case 'GAME_DRAW':
+                return `DRAW`
+            case 'GAME_COMPLETE':
+                return `${turn} WINS`
+            default:
+                return `Next Turn: ${turn}`
+        }
+    }
+
     return (
         <div style={{
             display: `inline-block`
@@ -120,7 +149,7 @@ function Game() {
                 display: `flex`,
                 justifyContent: `space-between`
             }}>
-                <div>{status !== 'GAME_COMPLETE' ? `Next Turn: ${turn}` : `${turn} WINS`}</div>
+                <div>{statusDisplay()}</div>
                 <button type="button" onClick={reset}>Reset</button>
             </div>
             <Grid suppliedGrid={grid} handleClick={handleClick} />
