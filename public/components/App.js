@@ -142,9 +142,7 @@ function Game() {
     }
 
     return (
-        <div style={{
-            display: `inline-block`
-        }}>
+        <div className={`app-container turn--${turn}`}>
             <div style={{
                 display: `flex`,
                 justifyContent: `space-between`
@@ -199,13 +197,6 @@ function Cell({onClick, value}) {
             }}>
             <button 
                 className="button"
-                style={{
-                    width: `100%`,
-                    height: `100%`,
-                    // borderStyle: `none`,
-                    // borderCollapse: `collapse`,
-                    borderSpacing: `0`
-                }}
                 onClick={onClick}
                 type="button">{value}</button>
         </div>

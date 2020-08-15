@@ -9,8 +9,26 @@
             display: flex;
             justify-content: center;
         }
+        .cell {
+            background-color: #fff;
+            width: 100;
+            height: 100;
+        }
         .button {
+            border: 0;
             font-size: 4em;
+            height: 100%;
+            width: 100%;
+            cursor: pointer;
+        }
+        .app-container {
+            display: inline-block;
+        }
+        .turn--O .button:hover {
+            background-color: #ffd414;
+        }
+        .turn--X .button:hover {
+            background-color: #add8e6;
         }
     </style>
 </head>
