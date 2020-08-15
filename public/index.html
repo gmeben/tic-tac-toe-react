@@ -11,15 +11,18 @@
         }
         .cell {
             background-color: #fff;
-            width: 100;
-            height: 100;
+            width: 100px;
+            height: 100px;
         }
         .button {
+            align-items: center;
             border: 0;
+            cursor: pointer;
             font-size: 4em;
             height: 100%;
+            justify-content: center;
+            display: flex;
             width: 100%;
-            cursor: pointer;
         }
         .app-container {
             display: inline-block;
@@ -29,6 +32,26 @@
         }
         .turn--X .button:hover {
             background-color: #add8e6;
+        }
+        .turn--O .button--filled:hover,
+        .turn--X .button--filled:hover {
+            background-color: initial;
+        }
+        .turn--X .button:hover:before,
+        .turn--O .button:hover:before {
+            color: #999;
+            display: block;
+        }
+        .turn--X .button:hover:before {
+            content: "X"
+        }
+        .turn--O .button:hover:before {
+            content: "O"
+        }
+        .game--finished .button:hover:before,
+        .turn--X .button--filled:hover:before,
+        .turn--O .button--filled:hover:before {
+            content: "";
         }
     </style>
 </head>

@@ -142,7 +142,7 @@ function Game() {
     }
 
     return (
-        <div className={`app-container turn--${turn}`}>
+        <div className={`app-container turn--${turn} ${(status === 'GAME_COMPLETE') ? 'game--finished' : ''}`}>
             <div style={{
                 display: `flex`,
                 justifyContent: `space-between`
@@ -188,15 +188,9 @@ function Grid({ suppliedGrid, handleClick }) {
 
 function Cell({onClick, value}) {
     return (
-        <div 
-            className="cell" 
-            style={{
-                backgroundColor: `#fff`,
-                width: 100,
-                height: 100
-            }}>
+        <div className="cell">
             <button 
-                className="button"
+                className={`button ${(value) ? 'button--filled' : ''}`}
                 onClick={onClick}
                 type="button">{value}</button>
         </div>
