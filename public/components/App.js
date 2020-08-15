@@ -137,7 +137,7 @@ function Game() {
             case 'GAME_COMPLETE':
                 return `${turn} WINS`
             default:
-                return `Next Turn: ${turn}`
+                return `TURN: ${turn}`
         }
     }
 
