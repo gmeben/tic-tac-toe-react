@@ -16,6 +16,7 @@
         }
         .button {
             align-items: center;
+            background-color: rgb(181, 148, 168);
             border: 0;
             cursor: pointer;
             font-size: 4em;
@@ -27,6 +28,9 @@
         .app-container {
             display: inline-block;
         }
+        .button--filled {
+            animation: fill 500ms linear;
+        }
         .turn--O .button:hover {
             background-color: #ffd414;
         }
@@ -35,7 +39,7 @@
         }
         .turn--O .button--filled:hover,
         .turn--X .button--filled:hover {
-            background-color: initial;
+            background-color: rgb(181, 148, 168);
         }
         .turn--X .button:hover:before,
         .turn--O .button:hover:before {
@@ -52,6 +56,14 @@
         .turn--X .button--filled:hover:before,
         .turn--O .button--filled:hover:before {
             content: "";
+        }
+        @keyframes fill {
+            0% {
+                background-color: #fff;
+            }
+            100% {
+                background-color: rgb(181, 148, 168);
+            }
         }
     </style>
 </head>
